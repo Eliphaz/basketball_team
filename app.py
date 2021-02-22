@@ -93,6 +93,9 @@ if __name__ == "__main__":
     if show.upper() == 'A':
         print(f'\n A) Panthers \n B) Bandits \n C) Warriors \n ')
         select_team = input('Enter an option (A/B/C):  ')
+        while select_team.upper() != 'A' and select_team.upper() != 'B' and select_team.upper() != 'C':
+            print('that is not a valid input')
+            select_team = input('Enter an option (A/B/C):  ')
         if select_team.upper() == 'A':
             print('\n Stats for Panthers:  ')
             print(stats(panthers))
