@@ -1,14 +1,16 @@
 from constants import PLAYERS
+import copy
 
 panthers = []
 bandits = []
 warriors = []
-clean_me = PLAYERS.copy()
+clean_me = copy.deepcopy(PLAYERS)
+
 
 #takes "(num) inches" and turns it into to a int
 def height_to_int(height_str):
-    num = height_str.split(' ')[0]
-    return int(num)
+    num = int(height_str.split(' ')[0])
+    return num
 
 #takes yes or no and changes to True or False
 def xp_to_bool(xp_str):
@@ -27,7 +29,23 @@ def clean_data(clean_me):
 
 #puts every 3rd player into a different team, I was wondering if we should balance by experience or not
 def assign_teams(player_lst):
-    for i, d in enumerate(player_lst):
+    xp_player = []
+    non_xp_player = []
+    for d in player_lst:
+        if d['experience']:
+            xp_player.append(d)
+        else:
+            non_xp_player.append(d)
+
+    for i, d in enumerate(xp_player):
+        if i % 3 == 0:
+            panthers.append(d)
+        elif i % 2 == 0:
+            warriors.append(d)
+        elif i % 1 == 0:
+            bandits.append(d)
+
+    for i, d in enumerate(non_xp_player):
         if i % 3 == 0:
             panthers.append(d)
         elif i % 2 == 0:
@@ -76,11 +94,14 @@ if __name__ == "__main__":
         print(f'\n A) Panthers \n B) Bandits \n C) Warriors \n ')
         select_team = input('Enter an option (A/B/C):  ')
         if select_team.upper() == 'A':
+            print('\n Stats for Panthers:  ')
             print(stats(panthers))
             print(players_and_guardians(panthers))
         elif select_team.upper() == 'B':
+            print('\n Stats for Bandits:  ')
             print(stats(bandits))
             print(players_and_guardians(bandits))
         elif select_team.upper() == 'C':
+            print('\n Stats for Warriors:  ')
             print(stats(warriors))
             print(players_and_guardians(warriors))
